@@ -1,20 +1,22 @@
+import os
 import logging
 import asyncio
 import nest_asyncio
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# Применяем nest_asyncio, если цикл событий уже запущен (например, в Jupyter)
+# Применяем nest_asyncio для корректной работы в среде с уже запущенным event loop
 nest_asyncio.apply()
 
-# Настройка логирования
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
-OWNER_CHAT_ID = 1050963411  # Ваш Telegram ID
+# Получаем переменные окружения
+OWNER_CHAT_ID = os.environ.get("1050963411")  # Ваш Telegram ID
+BOT_TOKEN = os.environ.get("8010910977:AAFg48Y8tuz2nM4pDRhFqZs5wI4umM-xlsw")          # Токен бота
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
@@ -25,10 +27,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update.message.reply_text("Привет! Спасибо за запуск бота.")
 
 async def main():
-    # Замените 'YOUR_BOT_TOKEN' на токен вашего бота
-    application = ApplicationBuilder().token("8010910977:AAFg48Y8tuz2nM4pDRhFqZs5wI4umM-xlsw").build()
+    application = ApplicationBuilder().token(BOT_TOKEN).build()
     application.add_handler(CommandHandler("start", start))
-    await application.run_polling()
+    # Передаем close_loop=False, чтобы не закрывать уже запущенный event loop
+    await application.run_polling(close_loop=False)
 
 if __name__ == '__main__':
     asyncio.run(main())
