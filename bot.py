@@ -23,7 +23,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Отправляем уведомление владельцу
     await context.bot.send_message(chat_id=OWNER_CHAT_ID, text=f"Новый пользователь: {username}")
     # Отвечаем пользователю
-    await update.message.reply_text("Привет! Спасибо за запуск бота.")
+    await update.message.reply_text("")
 
 def main():
     application = ApplicationBuilder().token(BOT_TOKEN).build()
