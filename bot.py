@@ -15,8 +15,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Получаем переменные окружения
-OWNER_CHAT_ID = os.environ.get("1050963411")  # Ваш Telegram ID
-BOT_TOKEN = os.environ.get("8010910977:AAFg48Y8tuz2nM4pDRhFqZs5wI4umM-xlsw")          # Токен бота
+OWNER_CHAT_ID = "1050963411"  # Ваш Telegram ID
+BOT_TOKEN = "8010910977:AAFg48Y8tuz2nM4pDRhFqZs5wI4umM-xlsw"         # Токен бота
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
